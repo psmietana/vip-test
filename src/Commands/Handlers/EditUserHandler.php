@@ -23,10 +23,11 @@ class EditUserHandler
         if (null === $user = $this->userRepository->find($command->getId())) {
             throw new InvalidArgumentException('User not found');
         }
-
         $user->setFirstName($command->getFirstName());
         $user->setLastName($command->getLastName());
         $user->setEmail($command->getEmail());
+        $user->setPhoneNumber($command->getPhoneNumber());
+
         $errors = $this->validator->validate($user);
         if (count($errors)) {
             $errorString = '';

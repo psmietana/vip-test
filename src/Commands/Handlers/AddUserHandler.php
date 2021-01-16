@@ -24,7 +24,8 @@ class AddUserHandler
         $user = new User(
             $command->getFirstName(),
             $command->getLastName(),
-            $command->getEmail()
+            $command->getEmail(),
+            $command->getPhoneNumber()
         );
         $errors = $this->validator->validate($user);
         if (count($errors)) {

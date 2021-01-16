@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\User;
+namespace App\Controller\Book;
 
 use App\Commands as Commands;
 use Doctrine\DBAL\Connection;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class UserController extends AbstractController
+class BookController extends AbstractController
 {
     private $commandBus;
     private $connection;
@@ -24,18 +24,17 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user", methods={"POST"}, name="app_user_add")
+     * @Route("/book", methods={"POST"}, name="app_book_add")
      */
-    public function addUser(Request $request): JsonResponse
+    public function addBook(Request $request): JsonResponse
     {
         $this->connection->beginTransaction();
 
         try {
-            $this->commandBus->handle(new Commands\AddUserCommand(
+            $this->commandBus->handle(new Commands\AddBookCommand(
                 $request->get('firstName'),
                 $request->get('lastName'),
-                $request->get('email'),
-                $request->get('phoneNumber')
+                $request->get('email')
             ));
             $this->connection->commit();
 
@@ -52,19 +51,18 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user", methods={"PUT"}, name="app_user_edit")
+     * @Route("/book", methods={"PUT"}, name="app_book_edit")
      */
-    public function editUser(Request $request): JsonResponse
+    public function editBook(Request $request): JsonResponse
     {
         $this->connection->beginTransaction();
 
         try {
-            $this->commandBus->handle(new Commands\EditUserCommand(
+            $this->commandBus->handle(new Commands\EditBookCommand(
                 $request->get('id'),
                 $request->get('firstName'),
                 $request->get('lastName'),
-                $request->get('email'),
-                $request->get('phoneNumber')
+                $request->get('email')
             ));
             $this->connection->commit();
 
@@ -80,14 +78,14 @@ class UserController extends AbstractController
         }
     }
     /**
-     * @Route("/user", methods={"DELETE"}, name="app_user_delete")
+     * @Route("/book", methods={"DELETE"}, name="app_book_delete")
      */
-    public function deleteUser(Request $request): JsonResponse
+    public function deleteBook(Request $request): JsonResponse
     {
         $this->connection->beginTransaction();
 
         try {
-            $this->commandBus->handle(new Commands\DeleteUserCommand($request->get('id')));
+            $this->commandBus->handle(new Commands\DeleteBookCommand($request->get('id')));
             $this->connection->commit();
 
             return new JsonResponse(null, 204);

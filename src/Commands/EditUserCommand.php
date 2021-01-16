@@ -9,13 +9,15 @@ class EditUserCommand
     private $firstName;
     private $lastName;
     private $email;
+    private $phoneNumber;
 
-    public function __construct(int $id, ?string $firstName, ?string $lastName, string $email)
+    public function __construct(int $id, ?string $firstName, ?string $lastName, string $email, string $phoneNumber)
     {
         $this->id = $id;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->email = $email;
+        $this->phoneNumber = $phoneNumber;
     }
 
     public function getId(): int
@@ -36,5 +38,10 @@ class EditUserCommand
     public function getEmail(): string
     {
         return $this->email;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
     }
 }

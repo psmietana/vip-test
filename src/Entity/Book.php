@@ -56,7 +56,7 @@ class Book
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -66,7 +66,7 @@ class Book
         $this->title = $title;
     }
 
-    public function getDescription(): ?string
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -76,7 +76,7 @@ class Book
         $this->description = $description;
     }
 
-    public function getShortDescription(): ?string
+    public function getShortDescription(): string
     {
         return $this->shortDescription;
     }

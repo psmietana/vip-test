@@ -46,11 +46,12 @@ class User
      */
     private $phoneNumber;
 
-    public function __construct(?string $firstName, ?string $lastName, string $email, string $slug = null)
+    public function __construct(?string $firstName, ?string $lastName, string $email, ?string $phoneNumber, string $slug = null)
     {
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->email = $email;
+        $this->phoneNumber = $phoneNumber;
         $this->slug = $slug;
     }
 

@@ -8,12 +8,14 @@ class AddUserCommand
     private $firstName;
     private $lastName;
     private $email;
+    private $phoneNumber;
 
-    public function __construct(?string $firstName, ?string $lastName, string $email)
+    public function __construct(?string $firstName, ?string $lastName, string $email, string $phoneNumber)
     {
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->email = $email;
+        $this->phoneNumber = $phoneNumber;
     }
 
     public function getFirstName(): ?string
@@ -29,5 +31,10 @@ class AddUserCommand
     public function getEmail(): string
     {
         return $this->email;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
     }
 }
