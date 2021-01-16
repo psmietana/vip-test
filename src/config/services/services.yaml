@@ -1,0 +1,6 @@
+services:
+    App\Commands\Handlers\:
+        resource: '../../Commands/Handlers/'
+        autowire: true
+        tags:
+            - { name: tactician.handler, command: App\Commands\AddUserCommand }
