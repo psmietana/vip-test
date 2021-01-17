@@ -42,4 +42,14 @@ class BookRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    public function findAllForUser(User $user): array
+    {
+        return $this->createQueryBuilder('b')
+            ->select('b')
+            ->innerJoin(User::class, 'u', 'WITH', 'u.id = :uid')
+            ->setParameter('uid', $user->getId())
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -3,4 +3,10 @@ services:
         resource: '../../Commands/Handlers/'
         autowire: true
         tags:
-            - { name: tactician.handler, command: App\Commands\AddUserCommand }
+            - { name: tactician.handler }
+
+    App\Queries\Handlers\:
+        resource: '../../Queries/Handlers/'
+        autowire: true
+        tags:
+            - { name: tactician.handler }

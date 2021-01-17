@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/user")
+ */
 class UserController extends AbstractController
 {
     private $commandBus;
@@ -24,7 +27,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user", methods={"POST"}, name="app_user_add")
+     * @Route("/", methods={"POST"}, name="app_user_add")
      */
     public function addUser(Request $request): JsonResponse
     {
@@ -52,7 +55,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user", methods={"PUT"}, name="app_user_edit")
+     * @Route("/", methods={"PUT"}, name="app_user_edit")
      */
     public function editUser(Request $request): JsonResponse
     {
@@ -80,7 +83,7 @@ class UserController extends AbstractController
         }
     }
     /**
-     * @Route("/user", methods={"DELETE"}, name="app_user_delete")
+     * @Route("/", methods={"DELETE"}, name="app_user_delete")
      */
     public function deleteUser(Request $request): JsonResponse
     {
@@ -98,6 +101,22 @@ class UserController extends AbstractController
         } catch (Exception $exception) {
             $this->connection->rollBack();
 
+            return new JsonResponse(['message' => 'Internal error'], 500);
+        }
+    }
+
+    /**
+     * @Route("/get-books", methods={"GET"}, name="app_user_get_books")
+     */
+    public function getBooks(Request $request): JsonResponse
+    {
+        try {
+            $data = $this->commandBus->handle(new Commands\DeleteUserCommand((int) $request->get('id')));
+
+            return new JsonResponse($data, 200);
+        } catch (InvalidArgumentException $exception) {
+            return new JsonResponse(['message' => $exception->getMessage()], 400);
+        } catch (Exception $exception) {
             return new JsonResponse(['message' => 'Internal error'], 500);
         }
     }
