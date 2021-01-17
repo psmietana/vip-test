@@ -2,8 +2,8 @@
 
 namespace App\Queries\Handlers;
 
-use App\Commands\AssignBookToUserCommand;
 use App\Entity\Book;
+use App\Queries\GetBooksForUserQuery;
 use App\Repository\BookRepository;
 use App\Repository\UserRepository;
 use InvalidArgumentException;
@@ -19,9 +19,9 @@ class GetBooksForUserHandler
         $this->bookRepository= $bookRepository;
     }
 
-    public function handle(AssignBookToUserCommand $command): array
+    public function handle(GetBooksForUserQuery $query): array
     {
-        if (null === $user = $this->userRepository->find($command->getUserId())) {
+        if (null === $user = $this->userRepository->find($query->getUserId())) {
             throw new InvalidArgumentException('User not found');
         }
 
