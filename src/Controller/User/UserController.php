@@ -60,7 +60,7 @@ class UserController extends AbstractController
 
         try {
             $this->commandBus->handle(new Commands\EditUserCommand(
-                $request->get('id'),
+                (int) $request->get('id'),
                 $request->get('firstName'),
                 $request->get('lastName'),
                 $request->get('email'),
@@ -87,7 +87,7 @@ class UserController extends AbstractController
         $this->connection->beginTransaction();
 
         try {
-            $this->commandBus->handle(new Commands\DeleteUserCommand($request->get('id')));
+            $this->commandBus->handle(new Commands\DeleteUserCommand((int) $request->get('id')));
             $this->connection->commit();
 
             return new JsonResponse(null, 204);

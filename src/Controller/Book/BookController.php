@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/book")
+ */
 class BookController extends AbstractController
 {
     private $commandBus;
@@ -24,7 +27,7 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/book", methods={"POST"}, name="app_book_add")
+     * @Route("/", methods={"POST"}, name="app_book_add")
      */
     public function addBook(Request $request): JsonResponse
     {
@@ -51,7 +54,7 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/book", methods={"PUT"}, name="app_book_edit")
+     * @Route("/", methods={"PUT"}, name="app_book_edit")
      */
     public function editBook(Request $request): JsonResponse
     {
@@ -59,7 +62,7 @@ class BookController extends AbstractController
 
         try {
             $this->commandBus->handle(new Commands\EditBookCommand(
-                $request->get('id'),
+                (int) $request->get('id'),
                 $request->get('firstName'),
                 $request->get('lastName'),
                 $request->get('email')
@@ -78,14 +81,40 @@ class BookController extends AbstractController
         }
     }
     /**
-     * @Route("/book", methods={"DELETE"}, name="app_book_delete")
+     * @Route("/", methods={"DELETE"}, name="app_book_delete")
      */
     public function deleteBook(Request $request): JsonResponse
     {
         $this->connection->beginTransaction();
 
         try {
-            $this->commandBus->handle(new Commands\DeleteBookCommand($request->get('id')));
+            $this->commandBus->handle(new Commands\DeleteBookCommand((int) $request->get('id')));
+            $this->connection->commit();
+
+            return new JsonResponse(null, 204);
+        } catch (InvalidArgumentException $exception) {
+            $this->connection->rollBack();
+
+            return new JsonResponse(['message' => $exception->getMessage()], 400);
+        } catch (Exception $exception) {
+            $this->connection->rollBack();
+
+            return new JsonResponse(['message' => 'Internal error'], 500);
+        }
+    }
+
+    /**
+     * @Route("/assign-to-user", methods={"PATCH"}, name="app_book_assign_to_user")
+     */
+    public function assignToUser(Request $request): JsonResponse
+    {
+        $this->connection->beginTransaction();
+
+        try {
+            $this->commandBus->handle(new Commands\AssignBookToUserCommand(
+                (int) $request->get('bookId'),
+                (int) $request->get('userId')
+            ));
             $this->connection->commit();
 
             return new JsonResponse(null, 204);
