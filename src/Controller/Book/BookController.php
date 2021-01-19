@@ -36,9 +36,9 @@ class BookController extends AbstractController
 
         try {
             $this->commandBus->handle(new Commands\AddBookCommand(
-                $request->get('firstName'),
-                $request->get('lastName'),
-                $request->get('email')
+                $request->get('title'),
+                $request->get('description'),
+                $request->get('shortDescription')
             ));
             $this->connection->commit();
 
@@ -64,9 +64,9 @@ class BookController extends AbstractController
         try {
             $this->commandBus->handle(new Commands\EditBookCommand(
                 (int) $request->get('id'),
-                $request->get('firstName'),
-                $request->get('lastName'),
-                $request->get('email')
+                $request->get('title'),
+                $request->get('description'),
+                $request->get('shortDescription')
             ));
             $this->connection->commit();
 

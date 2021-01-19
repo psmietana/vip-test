@@ -23,7 +23,7 @@ class AssignBookToUserHandler
         if (null === $user = $this->userRepository->find($command->getUserId())) {
             throw new InvalidArgumentException('User not found');
         }
-        if (null === $book = $this->bookRepository->find($command->getId())) {
+        if (null === $book = $this->bookRepository->find($command->getBookId())) {
             throw new InvalidArgumentException('Book not found');
         }
         $book->addUser($user);

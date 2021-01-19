@@ -3,10 +3,17 @@ services:
         resource: '../../Commands/Handlers/'
         autowire: true
         tags:
-            - { name: tactician.handler }
+            - { name: tactician.handler, typehints: true }
 
     App\Queries\Handlers\:
         resource: '../../Queries/Handlers/'
         autowire: true
         tags:
-            - { name: tactician.handler }
+            - { name: tactician.handler, typehints: true }
+    App\SMS\SmsSender:
+        arguments:
+            - '%app.sms.token_api_oauth%'
+            - '%app.sms.sender%'
+parameters:
+    app.sms.token_api_oauth: '%env(SMS_TOKEN_API_OAUTH)%'
+    app.sms.sender: '%env(xxx)%'

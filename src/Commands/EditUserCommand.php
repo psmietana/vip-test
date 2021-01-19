@@ -11,7 +11,7 @@ class EditUserCommand
     private $email;
     private $phoneNumber;
 
-    public function __construct(int $id, ?string $firstName, ?string $lastName, string $email, string $phoneNumber)
+    public function __construct(int $id, ?string $firstName, ?string $lastName, string $email, ?string $phoneNumber)
     {
         $this->id = $id;
         $this->firstName = $firstName;

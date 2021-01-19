@@ -37,7 +37,7 @@ class UserController extends AbstractController
             $this->commandBus->handle(new Commands\AddUserCommand(
                 $request->get('firstName'),
                 $request->get('lastName'),
-                $request->get('email'),
+                (string) $request->get('email'),
                 $request->get('phoneNumber')
             ));
             $this->connection->commit();
@@ -66,7 +66,7 @@ class UserController extends AbstractController
                 (int) $request->get('id'),
                 $request->get('firstName'),
                 $request->get('lastName'),
-                $request->get('email'),
+                (string) $request->get('email'),
                 $request->get('phoneNumber')
             ));
             $this->connection->commit();

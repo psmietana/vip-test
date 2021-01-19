@@ -10,7 +10,7 @@ class AddUserCommand
     private $email;
     private $phoneNumber;
 
-    public function __construct(?string $firstName, ?string $lastName, string $email, string $phoneNumber)
+    public function __construct(?string $firstName, ?string $lastName, string $email, ?string $phoneNumber)
     {
         $this->firstName = $firstName;
         $this->lastName = $lastName;
