@@ -3,6 +3,7 @@
 namespace App\Controller\User;
 
 use App\Commands as Commands;
+use App\Queries\GetBooksForUserQuery;
 use Doctrine\DBAL\Connection;
 use Exception;
 use InvalidArgumentException;
@@ -111,7 +112,7 @@ class UserController extends AbstractController
     public function getBooks(Request $request): JsonResponse
     {
         try {
-            $data = $this->commandBus->handle(new Commands\DeleteUserCommand((int) $request->get('id')));
+            $data = $this->commandBus->handle(new GetBooksForUserQuery((int) $request->get('id')));
 
             return new JsonResponse($data, 200);
         } catch (InvalidArgumentException $exception) {

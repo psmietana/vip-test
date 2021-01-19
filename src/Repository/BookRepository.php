@@ -47,7 +47,7 @@ class BookRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('b')
             ->select('b')
-            ->innerJoin(User::class, 'u', 'WITH', 'u.id = :uid')
+            ->innerJoin('b.users', 'u', 'WITH', 'u.id = :uid')
             ->setParameter('uid', $user->getId())
             ->getQuery()
             ->getResult();

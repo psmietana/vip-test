@@ -21,7 +21,7 @@ class GetBooksForUserHandler
 
     public function handle(GetBooksForUserQuery $query): array
     {
-        if (null === $user = $this->userRepository->find($query->getUserId())) {
+        if (null === $user = $this->userRepository->find($query->getId())) {
             throw new InvalidArgumentException('User not found');
         }
 
